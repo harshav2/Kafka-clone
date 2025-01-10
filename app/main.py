@@ -1,7 +1,7 @@
 import socket  # noqa: F401
 
 def create_message(message):
-    correlation_id_bytes = message.decode()[16:24].encode()
+    correlation_id_bytes = message[16:24]
 
     message_bytes = correlation_id_bytes
 

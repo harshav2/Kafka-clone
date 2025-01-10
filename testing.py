@@ -6,3 +6,7 @@ with socket.create_connection(("localhost", 9092)) as sock:
     print(type(output.decode()))
     print(output.decode())
     print(output)
+'''
+cd /d/vsc/misc/codecrafters-kafka-python    
+sh your_program.sh
+'''
