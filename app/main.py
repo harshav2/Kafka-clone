@@ -1,20 +1,23 @@
 import socket  # noqa: F401
 
-def create_message(id):
-    id_bytes = id.to_bytes(4, byteorder="big")  #byte order refers to byte endian 
-    message_size = len(id_bytes).to_bytes(4, byteorder="big") 
+def create_message(message):
+    correlation_id_bytes = message.decode()[16:24].encode()
 
-    return message_size+id_bytes
+    message_bytes = correlation_id_bytes
+
+    message_size = len(message_bytes).to_bytes(4, byteorder="big") #byte order refers to byte endian
+
+    return message_size+message_bytes
 
 
 def handleClient(client):
-    client.recv(1024)
-    client.sendall(create_message(id=7))
+    output=client.recv(1024)
+    client.sendall(create_message(message=output))
 
 def main():
     print("Logs from your program will appear here!")
 
-    server = socket.create_server(("localhost", 9092), reuse_port=True)
+    server = socket.create_server(("localhost", 9092))
     server.listen(1)
 
     while True:
