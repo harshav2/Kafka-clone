@@ -4,7 +4,7 @@ def create_message(id):
     id_bytes = id.to_bytes(4, byteorder="big")  #byte order refers to byte endian 
     message_size = len(id_bytes).to_bytes(4, byteorder="big") 
 
-    return id_bytes+message_size
+    return message_size+id_bytes
 
 
 def handleClient(client):
