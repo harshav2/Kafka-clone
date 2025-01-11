@@ -5,9 +5,9 @@ def create_message(message):
     request_api_version = message[6:8]
 
     if b'0000' <= request_api_version <= b'0004':
-        response_code = 35
-    else:
         response_code = 0
+    else:
+        response_code = 35
 
     response_code_bytes = response_code.to_bytes(2, byteorder="big")
     
