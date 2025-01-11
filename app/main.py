@@ -2,10 +2,16 @@ import socket  # noqa: F401
 
 def create_message(message):
     correlation_id_bytes = message[8:12]
+    request_api_version = message[6:8]
 
-    message_bytes = correlation_id_bytes
+    if b'0000' <= request_api_version <= b'0004':
+        response_code_bytes = b'0023'
+    else:
+        response_code_bytes = b'0000'        
+    
+    message_bytes = correlation_id_bytes + response_code_bytes
 
-    message_size = len(message_bytes).to_bytes(4, byteorder="big") #byte order refers to byte endian
+    message_size = len(message).to_bytes(4, byteorder="big") #byte order refers to byte endian
 
     return message_size+message_bytes
 
